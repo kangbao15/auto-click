@@ -1,1 +1,560 @@
+```html
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>KangBao AutoClick</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family:
+        "Segoe UI",
+        system-ui,
+        sans-serif;
+
+    color: white;
+
+    background:
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(170, 100, 255, .25),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 85% 85%,
+            rgba(100, 60, 180, .22),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #090611,
+            #140b24 50%,
+            #08050f
+        );
+
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================
+   BACKGROUND
+========================================= */
+
+.background-glow {
+    position: fixed;
+
+    width: 500px;
+    height: 500px;
+
+    border-radius: 50%;
+
+    background: rgba(170, 110, 255, .12);
+
+    filter: blur(100px);
+
+    pointer-events: none;
+
+    top: -180px;
+    left: -160px;
+}
+
+
+/* =========================================
+   MAIN GLASS
+========================================= */
+
+.container {
+    width: min(900px, 92%);
+
+    padding: 70px 70px 60px;
+
+    border-radius: 34px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.105),
+            rgba(255,255,255,.035)
+        );
+
+    border: 1px solid rgba(255,255,255,.14);
+
+    backdrop-filter: blur(35px) saturate(150%);
+    -webkit-backdrop-filter: blur(35px) saturate(150%);
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.55),
+        inset 0 1px 0 rgba(255,255,255,.08);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+/* =========================================
+   TOP
+========================================= */
+
+.top {
+    display: flex;
+
+    align-items: center;
+
+    gap: 30px;
+
+    margin-bottom: 50px;
+}
+
+.logo {
+    width: 105px;
+    height: 105px;
+
+    object-fit: contain;
+
+    border-radius: 25px;
+
+    filter:
+        drop-shadow(
+            0 12px 30px
+            rgba(180,120,255,.38)
+        );
+}
+
+.title h1 {
+    font-size: clamp(38px, 6vw, 62px);
+
+    letter-spacing: -2.5px;
+
+    line-height: 1;
+}
+
+.title p {
+    margin-top: 12px;
+
+    color: rgba(255,255,255,.58);
+
+    font-size: 17px;
+}
+
+
+/* =========================================
+   DOWNLOAD CARD
+========================================= */
+
+.download-card {
+    padding: 30px;
+
+    border-radius: 25px;
+
+    background:
+        rgba(255,255,255,.055);
+
+    border:
+        1px solid rgba(255,255,255,.10);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+.download-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 25px;
+}
+
+.version {
+    color: rgba(255,255,255,.55);
+
+    font-size: 14px;
+
+    margin-bottom: 8px;
+}
+
+.download-title {
+    font-size: 24px;
+
+    font-weight: 650;
+}
+
+
+/* =========================================
+   DOWNLOAD BUTTON
+========================================= */
+
+.download-button {
+    text-decoration: none;
+
+    color: #170d25;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d5b7ff,
+            #a875ff
+        );
+
+    padding: 15px 25px;
+
+    border-radius: 17px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        filter .2s ease;
+
+    box-shadow:
+        0 12px 30px
+        rgba(160,100,255,.25);
+}
+
+.download-button:hover {
+    transform: translateY(-3px);
+
+    filter: brightness(1.08);
+
+    box-shadow:
+        0 18px 42px
+        rgba(160,100,255,.42);
+}
+
+.download-button:active {
+    transform: scale(.97);
+}
+
+
+/* =========================================
+   FEATURES
+========================================= */
+
+.features {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+
+    margin-top: 20px;
+}
+
+.feature {
+    padding: 20px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,.04);
+
+    border:
+        1px solid rgba(255,255,255,.07);
+
+    transition:
+        transform .2s ease,
+        background .2s ease;
+}
+
+.feature:hover {
+    transform: translateY(-3px);
+
+    background:
+        rgba(255,255,255,.075);
+}
+
+.feature-icon {
+    font-size: 23px;
+
+    margin-bottom: 12px;
+}
+
+.feature-title {
+    font-weight: 650;
+
+    margin-bottom: 5px;
+}
+
+.feature-text {
+    color: rgba(255,255,255,.48);
+
+    font-size: 13px;
+
+    line-height: 1.45;
+}
+
+
+/* =========================================
+   FOOTER DOCK
+========================================= */
+
+.dock {
+    position: fixed;
+
+    bottom: 25px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    padding: 8px;
+
+    border-radius: 22px;
+
+    background:
+        rgba(30,20,45,.62);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+
+    box-shadow:
+        0 15px 50px rgba(0,0,0,.42);
+
+    white-space: nowrap;
+}
+
+.dock-item {
+    padding: 9px 15px;
+
+    border-radius: 15px;
+
+    color:
+        rgba(255,255,255,.65);
+
+    font-size: 13px;
+
+    transition:
+        background .2s ease,
+        color .2s ease;
+}
+
+.dock-item:hover {
+    background:
+        rgba(255,255,255,.09);
+
+    color: white;
+}
+
+.dock-active {
+    background:
+        rgba(190,140,255,.15);
+
+    color:
+        #d7bcff;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .container {
+        padding: 45px 25px 35px;
+    }
+
+    .top {
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+    .download-row {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        text-align: center;
+    }
+
+    .download-button {
+        width: 100%;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    .dock {
+        bottom: 15px;
+
+        max-width: 90%;
+
+        overflow-x: auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background-glow"></div>
+
+
+<main class="container">
+
+    <section class="top">
+
+        <img
+            src="iconclick.png"
+            alt="KangBao AutoClick"
+            class="logo"
+        >
+
+        <div class="title">
+
+            <h1>KangBao AutoClick</h1>
+
+            <p>
+                Fast. Simple. Built for Windows.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="download-card">
+
+        <div class="download-row">
+
+            <div>
+
+                <div class="version">
+                    Latest release · v1.0.0
+                </div>
+
+                <div class="download-title">
+                    KangBao AutoClick for Windows
+                </div>
+
+            </div>
+
+
+            <a
+                class="download-button"
+                href="https://github.com/kangbao15/auto-click/releases/download/v1.0.0/KangBaoAutoClick-Windows-x64.zip"
+            >
+                ↓ Download
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <section class="features">
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                ⚡
+            </div>
+
+            <div class="feature-title">
+                Fast
+            </div>
+
+            <div class="feature-text">
+                High-speed clicking with adjustable CPS.
+            </div>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                ⌨️
+            </div>
+
+            <div class="feature-title">
+                F6 Hotkey
+            </div>
+
+            <div class="feature-text">
+                Start or stop instantly with F6.
+            </div>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🟣
+            </div>
+
+            <div class="feature-title">
+                KangBao UI
+            </div>
+
+            <div class="feature-text">
+                Glass, blur and purple KangBao design.
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<nav class="dock">
+
+    <div class="dock-item dock-active">
+        🐺 KangBao
+    </div>
+
+    <div class="dock-item">
+        AutoClick
+    </div>
+
+    <div class="dock-item">
+        v1.0.0
+    </div>
+
+    <div class="dock-item">
+        Windows
+    </div>
+
+</nav>
+
+</body>
+</html>
+```
