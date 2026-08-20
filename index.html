@@ -1,178 +1,199 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>KangBao AutoClick</title>
+    <link rel="icon" type="image/png" href="iconclick.png">
 
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+
+            color: white;
+
+            background:
+                radial-gradient(circle at 20% 20%, #8b5cf6 0%, transparent 35%),
+                radial-gradient(circle at 80% 80%, #6d28d9 0%, transparent 35%),
+                #090612;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            overflow: hidden;
+        }
+
+        .glass {
+            width: min(700px, 90%);
+            padding: 55px;
+
+            text-align: center;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            border: 1px solid rgba(255, 255, 255, 0.16);
+
+            border-radius: 32px;
+
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.45);
+        }
+
+        .icon {
+            width: 110px;
+            height: 110px;
+
+            object-fit: contain;
+
+            margin-bottom: 22px;
+
+            filter:
+                drop-shadow(0 10px 25px rgba(139, 92, 246, 0.45));
+        }
+
+        h1 {
+            font-size: 46px;
+            letter-spacing: -2px;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            opacity: 0.7;
+            font-size: 17px;
+            margin-bottom: 35px;
+        }
+
+        .download {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 15px 32px;
+
+            border-radius: 16px;
+
+            background: #b88cff;
+            color: #160c25;
+
+            font-weight: 700;
+            font-size: 17px;
+
+            text-decoration: none;
+
+            transition: 0.2s ease;
+
+            box-shadow:
+                0 12px 30px rgba(184, 140, 255, 0.3);
+        }
+
+        .download:hover {
+            transform: translateY(-3px) scale(1.02);
+
+            box-shadow:
+                0 18px 40px rgba(184, 140, 255, 0.45);
+        }
+
+        .version {
+            margin-top: 22px;
+            opacity: 0.5;
+            font-size: 14px;
+        }
+
+        .dock {
+            position: fixed;
+
+            bottom: 24px;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            padding: 10px 16px;
+
+            display: flex;
+            gap: 10px;
+
+            border-radius: 22px;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        .dock span {
+            padding: 8px 14px;
+
+            border-radius: 14px;
+
+            font-size: 13px;
+
+            opacity: 0.65;
+        }
+
+        @media (max-width: 600px) {
+
+            .glass {
+                padding: 40px 25px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="window">
+    <main class="glass">
 
-    <header class="topbar">
+        <img
+            class="icon"
+            src="iconclick.png"
+            alt="KangBao AutoClick"
+        >
 
-        <div class="brand">
-            <div class="wolf">🐺</div>
+        <h1>KangBao AutoClick</h1>
 
-            <div>
-                <div class="title">
-                    KangBao <span>AutoClick</span>
-                </div>
+        <p class="subtitle">
+            Fast. Simple. Built by KangBao.
+        </p>
 
-                <div class="subtitle">
-                    SIMPLE • FAST • CLEAN
-                </div>
-            </div>
+        <a
+            class="download"
+            href="YOUR_GITHUB_RELEASE_ASSET_LINK"
+        >
+            ↓ Download for Windows
+        </a>
+
+        <div class="version">
+            Version 1.0.0 · Windows x64
         </div>
-
-        <div class="window-buttons">
-            <button id="minimize">−</button>
-            <button id="close">×</button>
-        </div>
-
-    </header>
-
-
-    <main>
-
-        <section class="glass status-card">
-
-            <div class="small-title">
-                STATUS
-            </div>
-
-            <div class="status-row">
-
-                <div id="status-dot" class="status-dot"></div>
-
-                <div id="status-text">
-                    READY
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <section class="glass speed-card">
-
-            <div class="section-header">
-
-                <div>
-                    <div class="small-title">
-                        CLICK SPEED
-                    </div>
-
-                    <div class="description">
-                        Maximum click rate
-                    </div>
-                </div>
-
-                <div id="cps">
-                    30
-                    <span>CPS</span>
-                </div>
-
-            </div>
-
-
-            <input
-                id="slider"
-                type="range"
-                min="1"
-                max="30"
-                value="30"
-            >
-
-            <div class="range-labels">
-                <span>1</span>
-                <span>15</span>
-                <span>30</span>
-            </div>
-
-        </section>
-
-
-        <button id="run" class="run-button">
-            <span id="run-icon">▶</span>
-            <span id="run-text">RUN</span>
-        </button>
-
-
-        <section class="glass settings">
-
-            <div class="setting">
-
-                <div>
-                    <div class="setting-title">
-                        GLOBAL HOTKEY
-                    </div>
-
-                    <div class="setting-description">
-                        Start or stop from anywhere
-                    </div>
-                </div>
-
-                <div class="key">
-                    F6
-                </div>
-
-            </div>
-
-
-            <div class="divider"></div>
-
-
-            <div class="setting">
-
-                <div>
-                    <div class="setting-title">
-                        MOUSE BUTTON
-                    </div>
-
-                    <div class="setting-description">
-                        Button used for clicking
-                    </div>
-                </div>
-
-                <div class="pill">
-                    LEFT
-                </div>
-
-            </div>
-
-        </section>
 
     </main>
 
-
     <div class="dock">
-
-        <div class="dock-item active">
-            <div class="dock-icon">🐺</div>
-            <div class="dock-label">
-                KangBao
-            </div>
-        </div>
-
-        <div class="dock-separator"></div>
-
-        <div class="dock-info">
-            AUTOCLICK
-        </div>
-
+        <span>🐺 KangBao</span>
+        <span>v1.0.0</span>
+        <span>Windows</span>
     </div>
-
-</div>
-
-<script src="renderer.js"></script>
 
 </body>
 </html>
